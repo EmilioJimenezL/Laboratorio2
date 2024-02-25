@@ -12,31 +12,50 @@ int * fusionarArraysInt(int *, int *, int, int);
 int main()
 {
     srand(time(NULL));
-    int arr1[5], arr2[5], num, index;
-    int *arr1Ptr = &arr1[0];
+    int arr1[5], arr2[5], num, index, menu;
+    int * arr1Ptr = &arr1[0];
     int * arr2Ptr = &arr2[0];
-    printf("Se generaron 2 arrays de 5 elementos con numeros aleatorios\n");
+    int * selectedPtr;
+    printf("Se genero 1 array de 5 elementos\n");
     for (int i = 0; i < sizeof(arr1)/sizeof(arr1[i]); ++i) {
-        arr1[i] = (rand()%100)+1;
-        arr2[i] = (rand()%100)+1;
+        arr1[i] = 0;
     }
-    printf("Array 1\n");
-    printIntArray(arr1Ptr, sizeof(arr1));
-    printf("Array 2\n");
-    printIntArray(arr2Ptr, sizeof(arr2));
-    num = (rand()%100)+1;
-    index = rand()%sizeof(arr1)/sizeof(arr1[0]);
-    printf("\nSe insertara el numero generado aleatoriamente (%i) en la posicion aleatoria (%i) del arreglo 1\n", num, index);
-    insertarIntArray(arr1Ptr, num, index);
-    printf("Array 1:\n");
-    printIntArray(arr1Ptr, sizeof(arr1));
-    index = rand()%sizeof(arr1)/sizeof(arr1[0]);
-    printf("\nSe eliminara un numero de la posicion aleatoria (%i) del arreglo 2", index);
-    deleteIntArray(arr2Ptr, index);
-    printf("\nArray 2:\n");
-    printIntArray(arr2Ptr, sizeof(arr2));
-    printf("\nSe fusionaran los dos arreglos modificados\n");
-    int * ptr3 = fusionarArraysInt(arr1Ptr, arr2Ptr, sizeof(arr1), sizeof(arr2));
+    do {
+        printf("Array 1\n");
+        printIntArray(arr1Ptr, sizeof(arr1));
+        printf("Que operacion desea realizar?\n");
+        printf("1) Insertar\n2) Eliminar\n3) Fusionar 2 arreglos\n0) Salir\n");
+        scanf("%i", &menu);
+        switch (menu) {
+            case 1:
+                printf("Ingrese el valor que desea insertar:\n");
+                scanf("%i", &num);
+                printf("Ingrese la posicion en la cual lo desea insertar:\n");
+                scanf("%i", &index);
+                insertarIntArray(arr1, num, index);
+                break;
+            case 2:
+                printf("Escriba el indice del valor que desea eliminar:\n");
+                scanf("%i", &index);
+                deleteIntArray(arr1Ptr, index);
+                break;
+            case 3:
+                for (int i = 0; i < sizeof(arr2)/sizeof(arr2[i]); ++i) {
+                    arr2[i] = rand()%100+1;
+                }
+                printf("Se ha generado un segundo array con valores aleatorios:\n");
+                printf("Array 2\n");
+                printIntArray(arr2Ptr, sizeof(arr2));
+                printf("Se han fusionado ambos arrays:\n");
+                fusionarArraysInt(arr1Ptr, arr2Ptr, sizeof(arr1), sizeof(arr2));
+                break;
+            case 0:
+                printf("Saliendo del programa...");
+                break;
+            default:
+                break;
+        }
+    } while (menu != 0);
     return 0;
 }
 void printIntArray(int *ptr, int memorySize){
@@ -58,7 +77,7 @@ int * fusionarArraysInt(int * ptr1, int * ptr2, int msize1, int msize2){
     int arr2Size = msize2/integerSize;
     int arrFusionSize = arr1Size + arr2Size;
     int arrFusion[arrFusionSize];
-    int * ptrFusion = &arrFusion;
+    int * ptrFusion = &arrFusion[0];
     for (int i = 0; i < arr1Size; ++i) {
         arrFusion[i] = *(ptr1+i);
         aux = i+1;
