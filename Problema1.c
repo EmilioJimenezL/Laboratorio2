@@ -7,6 +7,7 @@ int integerSize = 4;
 void insertarIntArray (int[], int, int);
 void printIntArray(int*, int);
 void deleteIntArray(int *, int);
+int * fusionarArraysInt(int *, int *, int, int);
 
 int main()
 {
@@ -31,21 +32,11 @@ int main()
     printIntArray(arr1Ptr, sizeof(arr1));
     index = rand()%sizeof(arr1)/sizeof(arr1[0]);
     printf("\nSe eliminara un numero de la posicion aleatoria (%i) del arreglo 2", index);
-    /*arr2[index] = 0;*/
     deleteIntArray(arr2Ptr, index);
     printf("\nArray 2:\n");
     printIntArray(arr2Ptr, sizeof(arr2));
     printf("\nSe fusionaran los dos arreglos modificados\n");
-    int arr3[sizeof(arr1)/sizeof(arr1[0]) + sizeof(arr2)/sizeof(arr2[0])];
-    for (int i = 0; i < sizeof(arr1)/sizeof(arr1[i]); ++i) {
-        arr3[i] = arr1[i];
-    }
-    for (int i = sizeof(arr1)/sizeof(arr1[i]); i < (sizeof(arr1)/sizeof(arr1[i]))*2; ++i) {
-        arr3[i] = arr2[i-sizeof(arr1)/sizeof(arr1[i])];
-    }
-    for (int i = 0; i < sizeof(arr3)/sizeof(arr3[i]); ++i) {
-        printf("%i ", arr3[i]);
-    }
+    int * ptr3 = fusionarArraysInt(arr1Ptr, arr2Ptr, sizeof(arr1), sizeof(arr2));
     return 0;
 }
 void printIntArray(int *ptr, int memorySize){
@@ -60,4 +51,21 @@ void insertarIntArray (int * ptr, int num, int index){
 }
 void deleteIntArray(int * ptr, int index){
     *(ptr + index) = 0;
+}
+int * fusionarArraysInt(int * ptr1, int * ptr2, int msize1, int msize2){
+    int aux;
+    int arr1Size = msize1/integerSize;
+    int arr2Size = msize2/integerSize;
+    int arrFusionSize = arr1Size + arr2Size;
+    int arrFusion[arrFusionSize];
+    int * ptrFusion = &arrFusion;
+    for (int i = 0; i < arr1Size; ++i) {
+        arrFusion[i] = *(ptr1+i);
+        aux = i+1;
+    }
+    for (int i = aux; i < (arr2Size + aux); ++i) {
+        arrFusion[i] = *(ptr2+(i-aux));
+    }
+    printIntArray(ptrFusion, arrFusionSize*4);
+    return ptrFusion;
 }
