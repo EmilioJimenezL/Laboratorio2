@@ -106,9 +106,9 @@ int main() {
         printf("2. Desencolar auto\n");
         printf("3. Mostrar lista de autos\n");
         printf("4. Mostrar primer auto\n");
-        printf("5. Mostrar último auto\n");
+        printf("5. Mostrar ultimo auto\n");
         printf("0. Salir\n");
-        printf("Ingrese su opción: ");
+        printf("Ingrese su opcion: ");
         scanf("%d", &opcion);
 
         switch (opcion) {
@@ -134,10 +134,10 @@ int main() {
                 imprimirUltimoAuto(&estacionamiento);
                 break;
             case 0:
-                printf("Saliendo del programa...\n");
+                printf("Saliendo del programa\n");
                 break;
             default:
-                printf("Opción no válida. Inténtelo de nuevo.\n");
+                printf("Opción no valida.Intentelo de nuevo.\n");
         }
 
     } while (opcion != 0);
