@@ -52,7 +52,6 @@ void desencolar(struct Estacionamiento *estacionamiento) {
         estacionamiento->frente = (estacionamiento->frente + 1) % MAXAUTOS;
         estacionamiento->contador--;
         if (estaVacia(estacionamiento)) {
-            // Reiniciar los índices si la cola está vacía
             inicializarEstacionamiento(estacionamiento);
         }
     } else {
