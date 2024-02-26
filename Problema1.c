@@ -1,3 +1,11 @@
+/*
+ * Estructuras de datos - LIS 2032-01
+ * Nombres Completos:
+ * Emilio Ivan Jimenez Lopez
+ * Hector Alejandro Canizales Peña
+ * Brandon Yahir Castro Ramos
+ * Descripción breve del programa:
+ * */
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
