@@ -1,7 +1,7 @@
 /* Problema 2. Pilas con arreglos 
  * (2 puntos)
  * Desarrollar un programa en lenguaje C que permita controlar los 
- * autos que entran y salen de unestacionamiento, empleando el nombre del auto
+ * autos que entran y salen de unestacionamiento, empleando el marca del auto
  * (string), placas(string) y modelo(int), usando una pila.
  * Utilice un arreglo de estructuras. Los datos de los autos deberán ser ingresados por el 
  * teclado. 
@@ -44,10 +44,10 @@ int main(int argc, char* argv[] ){
 
 //	estacionamiento[0]
 	char* x = "oo";
-	//strcpy( (*estacionamiento[0]).nombre, x);
-//	strcpy( estacionamiento[0]->nombre, "oooooo");
+	//strcpy( (*estacionamiento[0]).marca, x);
+//	strcpy( estacionamiento[0]->marca, "oooooo");
 
-//	printf("name is: %s\n", estacionamiento[0]->nombre);
+//	printf("name is: %s\n", estacionamiento[0]->marca);
 
 	acar.nombre = "oo";
 	estacionamiento[0]->nombre="zzz";
@@ -82,11 +82,11 @@ int main(int argc, char* argv[] ){
 			modelo = strtol(modelo_s, &endptr, 10);
 		}
 		
-//		strcpy(estacionamiento[i]->nombre, nombre);
+//		strcpy(estacionamiento[i]->marca, marca);
 //		strcpy(estacionamiento[i]->placas, placas);
 //		estacionamiento[i]->modelo = modelo;
 
-		//printf("[%d] %s,%s,%d\nEND\n", i, nombre, placas, modelo);
+		//printf("[%d] %s,%s,%d\nEND\n", i, marca, placas, modelo);
 
 	}
 
