@@ -3,10 +3,10 @@
 #include <string.h>
 
 #define MAXAUTOS 10
-#define longitudmax 10
+#define longitudmax 50
 
 struct Auto {
-    char marca[longitudmax];
+    char nombre[longitudmax];
     char placas[longitudmax];
     int modelo;
 };
@@ -48,7 +48,7 @@ void encolar(struct Estacionamiento *estacionamiento, struct Auto *autoNuevo) {
 
 void desencolar(struct Estacionamiento *estacionamiento) {
     if (!estaVacia(estacionamiento)) {
-        printf("Auto desencolado: %s\n", estacionamiento->autos[estacionamiento->frente].marca);
+        printf("Auto desencolado: %s\n", estacionamiento->autos[estacionamiento->frente].nombre);
         estacionamiento->frente = (estacionamiento->frente + 1) % MAXAUTOS;
         estacionamiento->contador--;
         if (estaVacia(estacionamiento)) {
@@ -64,7 +64,7 @@ void imprimirLista(struct Estacionamiento *estacionamiento) {
         printf("Lista de autos en el estacionamiento:\n");
         int i = estacionamiento->frente;
         for (int count = 0; count < estacionamiento->contador; count++) {
-            printf("Marca: %s, Placas: %s, Modelo: %d\n", estacionamiento->autos[i].marca,
+            printf("Nombre: %s, Placas: %s, Modelo: %d\n", estacionamiento->autos[i].nombre,
                    estacionamiento->autos[i].placas, estacionamiento->autos[i].modelo);
             i = (i + 1) % MAXAUTOS;
         }
@@ -76,7 +76,7 @@ void imprimirLista(struct Estacionamiento *estacionamiento) {
 void imprimirPrimerAuto(struct Estacionamiento *estacionamiento) {
     if (!estaVacia(estacionamiento)) {
         printf("Primer auto en el estacionamiento:\n");
-        printf("Nombre: %s, Placas: %s, Modelo: %d\n", estacionamiento->autos[estacionamiento->frente].marca,
+        printf("Nombre: %s, Placas: %s, Modelo: %d\n", estacionamiento->autos[estacionamiento->frente].nombre,
                estacionamiento->autos[estacionamiento->frente].placas, estacionamiento->autos[estacionamiento->frente].modelo);
     } else {
         printf("El estacionamiento esta vacio.\n");
@@ -86,7 +86,7 @@ void imprimirPrimerAuto(struct Estacionamiento *estacionamiento) {
 void imprimirUltimoAuto(struct Estacionamiento *estacionamiento) {
     if (!estaVacia(estacionamiento)) {
         printf("Ultimo auto en el estacionamiento:\n");
-        printf("Nombre: %s, Placas: %s, Modelo: %d\n", estacionamiento->autos[estacionamiento->fin].marca,
+        printf("Nombre: %s, Placas: %s, Modelo: %d\n", estacionamiento->autos[estacionamiento->fin].nombre,
                estacionamiento->autos[estacionamiento->fin].placas, estacionamiento->autos[estacionamiento->fin].modelo);
     } else {
         printf("El estacionamiento esta vacio.\n");
@@ -113,11 +113,11 @@ int main() {
 
         switch (opcion) {
             case 1:
-                printf("Ingrese la marca del auto:\n");
-                scanf("%s", autoNuevo.marca);
+                printf("Ingrese el nombre del auto:\n");
+                scanf("%s", autoNuevo.nombre);
                 printf("Ingrese las placas del auto:\n");
                 scanf("%s", autoNuevo.placas);
-                printf("Ingrese el modelo del auto:\n");
+                printf("Ingrese el modelo del auto (numero):\n");
                 scanf("%d", &autoNuevo.modelo);
                 encolar(&estacionamiento, &autoNuevo);
                 break;

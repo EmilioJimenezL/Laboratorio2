@@ -4,7 +4,7 @@
 #include <string.h>
 
 typedef struct {
-	char *marca;
+	char *nombre;
 	char *placas;
 	int modelo;
 
@@ -16,8 +16,6 @@ int printEstacionamientoStack(car *estacionamiento[10], int top);
 int printEstacionamientoArray(car *[10]);
 
 int main(int argc, char* argv[] ){
-
-	printf("Hello, world!\n");
 
 	car* estacionamiento[10] = {NULL};
 	// estacionamiento_top shall be an available index number 
@@ -66,13 +64,13 @@ int main(int argc, char* argv[] ){
 								break;
 							}
 
-							char *marca = malloc(51);
+							char *nombre = malloc(51);
 							char *placas = malloc(11);
 							char modelo_s[10];
 							int modelo;
 
-							printf("Ingrese la marca del carro (max 50 chars):\t");
-							scanf("%s", marca);
+							printf("Ingrese el nombre del carro (max 50 chars):\t");
+							scanf("%s", nombre);
 							printf("Ingrese las placas del carro (max 10 chars):\t");
 							scanf("%s", placas);
 							printf("Ingrese el modelo del carro (solo numeros):\t");
@@ -93,7 +91,7 @@ int main(int argc, char* argv[] ){
 							}
 
 
-							addToEstacionamientoStack(estacionamiento, &estacionamiento_top, marca, placas, modelo);
+							addToEstacionamientoStack(estacionamiento, &estacionamiento_top, nombre, placas, modelo);
 							printf("Carro: [%s] anadido a numero\n", placas, estacionamiento_top);
 							printEstacionamientoStack(estacionamiento, estacionamiento_top);
 
@@ -128,7 +126,7 @@ int main(int argc, char* argv[] ){
 							if(numero <= estacionamiento_top){
 
 
-								free(estacionamiento[numero-1]->marca);
+								free(estacionamiento[numero-1]->nombre);
 								free(estacionamiento[numero-1]->placas);
 
 								char *nombre = malloc(51);
@@ -136,7 +134,7 @@ int main(int argc, char* argv[] ){
 								char modelo_s[10];
 								int modelo;
 
-								printf("Ingrese el marca del carro (max 50 chars):\t");
+								printf("Ingrese el nombre del carro (max 50 chars):\t");
 								scanf("%s", nombre);
 								printf("Ingrese las placas del carro (max 10 chars):\t");
 								scanf("%s", placas);
@@ -157,7 +155,7 @@ int main(int argc, char* argv[] ){
 									modelo = strtol(modelo_s, &endptr, 10);
 								}
 
-								estacionamiento[numero-1]->marca = nombre;
+								estacionamiento[numero-1]->nombre = nombre;
 								estacionamiento[numero-1]->placas = placas;
 								estacionamiento[numero-1]->modelo= modelo;
 
@@ -206,9 +204,9 @@ int popFromEstacionamientoStack(car *estacionamiento[10], int *top){
 
 	int i = *top - 1;
 	printf("Carro saliendo...\n");
-	printf("#%d: %s, %s, %d\n", *top, estacionamiento[i]->marca, estacionamiento[i]->placas, estacionamiento[i]->modelo);
+	printf("#%d: %s, %s, %d\n", *top, estacionamiento[i]->nombre, estacionamiento[i]->placas, estacionamiento[i]->modelo);
 
-	free(estacionamiento[i]->marca);
+	free(estacionamiento[i]->nombre);
 	free(estacionamiento[i]->placas);
 	free(estacionamiento[i]);
 
@@ -225,7 +223,7 @@ int addToEstacionamientoStack(car *estacionamiento[10], int *top, char *nombre, 
 	if(estacionamiento[*top] == NULL){
 		estacionamiento[*top] = malloc(sizeof(car));
 	}
-	estacionamiento[*top]->marca = nombre;
+	estacionamiento[*top]->nombre = nombre;
 	estacionamiento[*top]->placas = placas;
 	estacionamiento[*top]->modelo = modelo;
 	*top = *top + 1;
@@ -238,7 +236,7 @@ int printEstacionamientoStack(car *estacionamiento[10], int top){
 		printf("Estacionamiento VACIO\n");
 	}
 	for(int i = 0; i < top; i++){
-			printf("#%d: %s, %s, %d\n", i+1, estacionamiento[i]->marca, estacionamiento[i]->placas, estacionamiento[i]->modelo);
+			printf("#%d: %s, %s, %d\n", i+1, estacionamiento[i]->nombre, estacionamiento[i]->placas, estacionamiento[i]->modelo);
 	}
 
 	return 0;
@@ -248,7 +246,7 @@ int printEstacionamientoArray(car *estacionamiento[10]){
 	
 	for(int i = 0; i < 10; i++){
 		if(estacionamiento[i] != NULL){
-			printf("[%d]: %s, %s, %d\n", i, estacionamiento[i]->marca, estacionamiento[i]->placas, estacionamiento[i]->modelo);
+			printf("[%d]: %s, %s, %d\n", i, estacionamiento[i]->nombre, estacionamiento[i]->placas, estacionamiento[i]->modelo);
 		}
 	}
 	
