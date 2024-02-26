@@ -1,32 +1,14 @@
-/* Problema 2. Pilas con arreglos 
- * (2 puntos)
- * Desarrollar un programa en lenguaje C que permita controlar los 
- * autos que entran y salen de unestacionamiento, empleando el nombre del auto
- * (string), placas(string) y modelo(int), usando una pila.
- * Utilice un arreglo de estructuras. Los datos de los autos deberán ser ingresados por el 
- * teclado. 
- *
- * El programa debe usar un menú para poder:
- * a) Imprimir el número de autos que se encuentran en el estacionamiento
- * b) Imprimir la lista de los autos (y sus características) que se 
- * encuentran en el estacionamiento en orden.
- * c) Imprimir el primer auto que ha entrado (características).
- * d) Imprimir el último auto que ha entrado (características).
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
 
-
 typedef struct {
-	char *nombre;
+	char *marca;
 	char *placas;
 	int modelo;
 
 } car;
-
 
 int popFromEstacionamientoStack(car *estacionamiento[10], int *top);
 int addToEstacionamientoStack(car *estacionamiento[10], int *top, char *nombre, char *placas, int modelo);
@@ -43,32 +25,32 @@ int main(int argc, char* argv[] ){
 
 	while(1){
 		printf("Utilice el menu para manejar el estacionamiento\n");
-		printf("1		Imprimir stack del estacionamiento.\n");
-		printf("2		Anadir o editar el stack del estacionamiento.\n");
-		printf("3		Remover del stack del estacionamiento.\n");
-		printf("0		Salir.\n");
+		printf("1) Imprimir stack del estacionamiento.\n");
+		printf("2) Anadir o editar el stack del estacionamiento.\n");
+		printf("3) Remover del stack del estacionamiento.\n");
+		printf("0) Salir.\n");
 
-		int input;
+		int input_i;
 
-		scanf("%c", &input);
+		scanf("%i", &input_i);
 		getchar();
 		//printf("the char received is %c\n", x);
 
-		switch(input){
-			case '1':
+		switch(input_i){
+			case 1:
 				printEstacionamientoStack(estacionamiento, estacionamiento_top);
 
 				break;
-			case '2':
-				short int go_back = 0;
+			case 2:
+				int go_back = 0;
 				while(!go_back){
 
 					char input_c;
 
-					printf("\n");
-					printf("a		Anadir nuevo carro.\n");
-					printf("c		Cambiar datos de un carro.\n");
-					printf("0		Go back.\n");
+					printf("Seleccione una opcion:\n");
+					printf("a) Anadir nuevo carro.\n");
+					printf("c) Cambiar datos de un carro.\n");
+					printf("0) Go back.\n");
 
 					scanf("%c", &input_c);
 					getchar();
@@ -84,13 +66,13 @@ int main(int argc, char* argv[] ){
 								break;
 							}
 
-							char *nombre = malloc(51);
+							char *marca = malloc(51);
 							char *placas = malloc(11);
 							char modelo_s[10];
 							int modelo;
 
-							printf("Ingrese el nombre del carro (max 50 chars):\t");
-							scanf("%s", nombre);
+							printf("Ingrese la marca del carro (max 50 chars):\t");
+							scanf("%s", marca);
 							printf("Ingrese las placas del carro (max 10 chars):\t");
 							scanf("%s", placas);
 							printf("Ingrese el modelo del carro (solo numeros):\t");
@@ -111,7 +93,7 @@ int main(int argc, char* argv[] ){
 							}
 
 
-							addToEstacionamientoStack(estacionamiento, &estacionamiento_top, nombre, placas, modelo);
+							addToEstacionamientoStack(estacionamiento, &estacionamiento_top, marca, placas, modelo);
 							printf("Carro: [%s] anadido a numero\n", placas, estacionamiento_top);
 							printEstacionamientoStack(estacionamiento, estacionamiento_top);
 
@@ -146,7 +128,7 @@ int main(int argc, char* argv[] ){
 							if(numero <= estacionamiento_top){
 
 
-								free(estacionamiento[numero-1]->nombre);
+								free(estacionamiento[numero-1]->marca);
 								free(estacionamiento[numero-1]->placas);
 
 								char *nombre = malloc(51);
@@ -154,7 +136,7 @@ int main(int argc, char* argv[] ){
 								char modelo_s[10];
 								int modelo;
 
-								printf("Ingrese el nombre del carro (max 50 chars):\t");
+								printf("Ingrese el marca del carro (max 50 chars):\t");
 								scanf("%s", nombre);
 								printf("Ingrese las placas del carro (max 10 chars):\t");
 								scanf("%s", placas);
@@ -175,7 +157,7 @@ int main(int argc, char* argv[] ){
 									modelo = strtol(modelo_s, &endptr, 10);
 								}
 
-								estacionamiento[numero-1]->nombre = nombre;
+								estacionamiento[numero-1]->marca = nombre;
 								estacionamiento[numero-1]->placas = placas;
 								estacionamiento[numero-1]->modelo= modelo;
 
@@ -197,7 +179,7 @@ int main(int argc, char* argv[] ){
 				}
 
 				break;
-			case '3':
+			case 3:
 
 				popFromEstacionamientoStack(estacionamiento, &estacionamiento_top);
 				printEstacionamientoStack(estacionamiento, estacionamiento_top);
@@ -212,49 +194,7 @@ int main(int argc, char* argv[] ){
 		}
 
 	}
-
-
-	/*
-	for(int i = 0; i < 10; i++){
-
-		if(estacionamiento[i] == NULL){
-			printf("estacionamiento[i] is nULL!!\n");
-			estacionamiento[i] = malloc(sizeof(car));
-		}
-
-		char *nombre = malloc(50);
-		char *placas = malloc(10);
-		char modelo_s[10];
-		int modelo;
-
-		scanf("%s", nombre);
-		scanf("%s", placas);
-		scanf("%s", modelo_s);
-
-		//getchar();
-
-		errno = 0;
-		// convert string to int
-		char *endptr;
-		modelo = strtol(modelo_s, &endptr, 10);
-		while(*endptr != '\0'){
-			printf("Ingrese el Modelo solo como un numero:\t");
-			scanf("%s", modelo_s);
-			errno = 0;
-			modelo = strtol(modelo_s, &endptr, 10);
-		}
-		
-		estacionamiento[i]->nombre = nombre;
-		estacionamiento[i]->placas = placas;
-		estacionamiento[i]->modelo = modelo;
-
-		//printf("[%d] %s,%s,%d\nEND\n", i, nombre, placas, modelo);
-
-	}
-	*/
-
 	printEstacionamientoArray(estacionamiento);
-
 	return 0;
 }
 
@@ -266,9 +206,9 @@ int popFromEstacionamientoStack(car *estacionamiento[10], int *top){
 
 	int i = *top - 1;
 	printf("Carro saliendo...\n");
-	printf("#%d: %s, %s, %d\n", *top, estacionamiento[i]->nombre, estacionamiento[i]->placas, estacionamiento[i]->modelo);
+	printf("#%d: %s, %s, %d\n", *top, estacionamiento[i]->marca, estacionamiento[i]->placas, estacionamiento[i]->modelo);
 
-	free(estacionamiento[i]->nombre);
+	free(estacionamiento[i]->marca);
 	free(estacionamiento[i]->placas);
 	free(estacionamiento[i]);
 
@@ -285,7 +225,7 @@ int addToEstacionamientoStack(car *estacionamiento[10], int *top, char *nombre, 
 	if(estacionamiento[*top] == NULL){
 		estacionamiento[*top] = malloc(sizeof(car));
 	}
-	estacionamiento[*top]->nombre = nombre;
+	estacionamiento[*top]->marca = nombre;
 	estacionamiento[*top]->placas = placas;
 	estacionamiento[*top]->modelo = modelo;
 	*top = *top + 1;
@@ -298,7 +238,7 @@ int printEstacionamientoStack(car *estacionamiento[10], int top){
 		printf("Estacionamiento VACIO\n");
 	}
 	for(int i = 0; i < top; i++){
-			printf("#%d: %s, %s, %d\n", i+1, estacionamiento[i]->nombre, estacionamiento[i]->placas, estacionamiento[i]->modelo);
+			printf("#%d: %s, %s, %d\n", i+1, estacionamiento[i]->marca, estacionamiento[i]->placas, estacionamiento[i]->modelo);
 	}
 
 	return 0;
@@ -308,7 +248,7 @@ int printEstacionamientoArray(car *estacionamiento[10]){
 	
 	for(int i = 0; i < 10; i++){
 		if(estacionamiento[i] != NULL){
-			printf("[%d]: %s, %s, %d\n", i, estacionamiento[i]->nombre, estacionamiento[i]->placas, estacionamiento[i]->modelo);
+			printf("[%d]: %s, %s, %d\n", i, estacionamiento[i]->marca, estacionamiento[i]->placas, estacionamiento[i]->modelo);
 		}
 	}
 	
